@@ -22,7 +22,7 @@ async function sendTokenResponse(user, res, message) {
 }
 
 export const registerController = async (req, res) => {
-  const { email, contact, password, fullname } = req.body;
+  const { email, contact, password, fullname, isSeller } = req.body;
 
   try {
     const existingUser = await userModel.findOne({
