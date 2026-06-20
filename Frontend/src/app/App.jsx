@@ -1,8 +1,10 @@
-import './App.css'
+import "./App.css"
 
 const App = () => {
   return (
-    <div>App with Tailwind</div>
+    <div>
+      <h2>App Layout Component</h2>
+    </div>
   )
 }
 
