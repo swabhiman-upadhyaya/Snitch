@@ -3,9 +3,10 @@ import bcrypt from "bcryptjs"
 
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
-  contact: { type: String, required: true },
-  password: { type: String, required: true },
+  contact: { type: String },
+  password: { type: String },
   fullname: { type: String, required: true },
+  googleId: { type: String },
   role: {
     type: String,
     enum: ["buyer", "seller"],
@@ -14,7 +15,7 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.pre("save", async function () {
-  if(!this.isModified("password")) return;
+  if(!this.isModified("password") || !this.password) return;
 
   const hash = await bcrypt.hash(this.password, 10);
   this.password = hash;

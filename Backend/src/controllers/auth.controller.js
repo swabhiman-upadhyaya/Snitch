@@ -83,3 +83,47 @@ export const loginController = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 }
+
+export const googleCallback = async (req, res) => {
+  try {
+    const profile = req.user;
+    const email = profile.emails[0].value;
+    const fullname = profile.displayName;
+    const googleId = profile.id;
+
+    // Find existing user by googleId or email, or create a new one
+    let user = await userModel.findOne({
+      $or: [{ googleId }, { email }]
+    });
+
+    if (!user) {
+      user = await userModel.create({
+        email,
+        fullname,
+        googleId,
+        role: "buyer"
+      });
+    } else if (!user.googleId) {
+      // Link Google account to existing email-based user
+      user.googleId = googleId;
+      await user.save();
+    }
+
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    // Redirect to frontend with token so the SPA can store it
+    res.redirect(`http://localhost:5173/auth/google/callback?token=${token}&user=${encodeURIComponent(JSON.stringify({
+      id: user._id,
+      email: user.email,
+      fullname: user.fullname,
+      role: user.role
+    }))}`);
+  } catch (error) {
+    console.log("Google auth error:", error);
+    res.redirect("http://localhost:5173/login?error=google_auth_failed");
+  }
+}
