@@ -5,9 +5,11 @@ import userModel from "../models/user.model.js";
 async function sendTokenResponse(user, res, message) {
   const token = jwt.sign(
     { id: user._id },
-    process.env.JWT_SECRET,
+    config.JWT_SECRET,
     { expiresIn: "7d" }
   );
+
+  res.cookie("token", token);
 
   return res.status(201).json({
     message,
@@ -86,10 +88,15 @@ export const loginController = async (req, res) => {
 
 export const googleCallback = async (req, res) => {
   try {
+
+    /* const {id, displayName, emails, photos} = req.user */
+
     const profile = req.user;
-    const email = profile.emails[0].value;
     const fullname = profile.displayName;
     const googleId = profile.id;
+
+    const email = profile.emails[0].value;
+    const profilePic = profile.photos[0].value;
 
     // Find existing user by googleId or email, or create a new one
     let user = await userModel.findOne({
@@ -100,10 +107,10 @@ export const googleCallback = async (req, res) => {
       user = await userModel.create({
         email,
         fullname,
-        googleId,
-        role: "buyer"
+        googleId
       });
-    } else if (!user.googleId) {
+    }
+    else if (!user.googleId) {
       // Link Google account to existing email-based user
       user.googleId = googleId;
       await user.save();
@@ -111,9 +118,16 @@ export const googleCallback = async (req, res) => {
 
     const token = jwt.sign(
       { id: user._id },
-      process.env.JWT_SECRET,
+      config.JWT_SECRET,
       { expiresIn: "7d" }
     );
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+    });
 
     // Redirect to frontend with token so the SPA can store it
     res.redirect(`http://localhost:5173/auth/google/callback?token=${token}&user=${encodeURIComponent(JSON.stringify({
