@@ -21,11 +21,11 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await handleLogin({
+    const user = await handleLogin({
       email: formData.email,
       password: formData.password
     });
-    navigate("/");
+    navigate(user?.isSeller ? "/seller/create-product" : "/");
   };
 
   return (

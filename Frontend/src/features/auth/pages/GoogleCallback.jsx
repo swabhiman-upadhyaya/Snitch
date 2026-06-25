@@ -25,7 +25,7 @@ const GoogleCallback = () => {
         localStorage.setItem("token", token);
         // Update Redux auth state
         dispatch(setUser(user));
-        navigate("/");
+        navigate(user?.isSeller ? "/seller/create-product" : "/");
       } catch (err) {
         console.error("Failed to parse Google auth response:", err);
         navigate("/login?error=google_auth_failed");
