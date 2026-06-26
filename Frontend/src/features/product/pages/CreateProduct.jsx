@@ -96,21 +96,43 @@ const CreateProduct = () => {
   );
 
   return (
-    <div className="h-screen flex items-center justify-center bg-[var(--theme-1)]/15 p-4 sm:p-6 font-sans overflow-hidden">
-      <div className="w-full max-w-3xl bg-white rounded-3xl shadow-2xl shadow-[var(--theme-2)]/20 border border-[var(--theme-1)] p-5 sm:p-7 lg:p-8">
+    <div className="min-h-screen flex items-center justify-center bg-[var(--theme-1)]/15 p-4 sm:p-6 font-sans overflow-x-hidden">
+      <div className="w-full max-w-3xl min-[900px]:max-w-6xl xl:max-w-7xl min-[900px]:min-h-[85vh] flex flex-col min-[900px]:flex-row bg-white rounded-3xl shadow-2xl shadow-[var(--theme-2)]/20 overflow-hidden border border-[var(--theme-1)] transition-all duration-300">
 
-        {/* Header */}
-        <div className="text-center mb-4">
-          <h1 className="text-3xl lg:text-4xl font-light text-[var(--theme-4)] tracking-tight">
-            Create Product
-          </h1>
-          <p className="text-[var(--theme-3)] text-sm font-medium mt-1">
-            Fill in the details to list a new product
-          </p>
+        {/* Branding Panel */}
+        <div className="hidden min-[900px]:flex w-full min-[900px]:w-2/5 flex-col items-center justify-center py-8 px-6 min-[900px]:p-12 text-white relative overflow-hidden"
+          style={{ background: `linear-gradient(135deg, var(--theme-4) 0%, var(--theme-3) 50%, var(--theme-2) 100%)` }}
+        >
+          {/* Decorative circles */}
+          <div className="absolute -top-16 -left-16 w-56 h-56 rounded-full bg-white/10"></div>
+          <div className="absolute -bottom-20 -right-20 w-72 h-72 rounded-full bg-white/10"></div>
+          <div className="hidden min-[900px]:block absolute top-1/2 left-1/4 w-32 h-32 rounded-full bg-white/5"></div>
+
+          <div className="relative z-10 text-center space-y-4 min-[900px]:space-y-8">
+            <h2 className="text-3xl min-[900px]:text-6xl font-bold tracking-tight">Snitch</h2>
+            <div className="w-10 min-[900px]:w-14 h-0.5 bg-white/60 mx-auto"></div>
+            <p className="text-xl min-[900px]:text-3xl font-light leading-relaxed opacity-90">Create Product</p>
+            <p className="hidden min-[900px]:block text-base opacity-80 max-w-xs mx-auto leading-relaxed mt-4">
+              Fill in the details to list a new product and showcase it to the world.
+            </p>
+          </div>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="space-y-4">
+        {/* Right Form Panel */}
+        <div className="w-full min-[900px]:w-3/5 p-6 sm:p-8 min-[900px]:p-12 xl:p-16 flex flex-col justify-center">
+
+          {/* Mobile Header */}
+          <div className="text-center mb-6 min-[900px]:hidden">
+            <h1 className="text-3xl font-light text-[var(--theme-4)] tracking-tight">
+              Create Product
+            </h1>
+            <p className="text-[var(--theme-3)] text-sm font-medium mt-1">
+              Fill in the details to list a new product
+            </p>
+          </div>
+
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 justify-center">
+          <div className="space-y-4 min-[900px]:space-y-8">
             
             {/* Row 1: Title and Price */}
             <div className="flex flex-col sm:flex-row gap-4">
@@ -315,6 +337,7 @@ const CreateProduct = () => {
             </p>
           </div>
         </form>
+        </div>
       </div>
     </div>
   );

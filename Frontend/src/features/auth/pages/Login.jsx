@@ -25,7 +25,8 @@ const Login = () => {
       email: formData.email,
       password: formData.password
     });
-    navigate(user?.isSeller ? "/seller/create-product" : "/");
+    const isSeller = user.role;
+    navigate(isSeller ? "/seller/create-product" : "/");
   };
 
   return (

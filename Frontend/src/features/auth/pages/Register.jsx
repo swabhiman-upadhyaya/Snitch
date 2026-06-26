@@ -31,7 +31,8 @@ const Register = () => {
       password: formData.password,
       isSeller: formData.isSeller
     });
-    navigate(user?.isSeller ? "/seller/create-product" : "/");
+    const isSeller = user.role;
+    navigate(isSeller ? "/seller/create-product" : "/");
   };
 
   return (
