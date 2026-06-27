@@ -83,7 +83,7 @@ const CreateProduct = () => {
       payload.append("priceCurrency", formData.priceCurrency);
       images.forEach((img) => payload.append("images", img.file));
       await handleCreateProduct(payload);
-      navigate("/");
+      navigate("/seller/dashboard");
     } catch (err) {
       console.error("Failed to create product:", err);
     } finally {
@@ -331,7 +331,7 @@ const CreateProduct = () => {
             </button>
             <p className="text-sm text-[var(--theme-3)] text-center">
               Want to manage your listings?{" "}
-              <Link to="/" className="text-[var(--theme-4)] font-semibold hover:underline">
+              <Link to="/seller/dashboard" className="text-[var(--theme-4)] font-semibold hover:underline">
                 Go to Dashboard
               </Link>
             </p>

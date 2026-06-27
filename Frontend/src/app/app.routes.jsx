@@ -6,39 +6,41 @@ import GoogleCallback from "../features/auth/components/GoogleCallback.jsx"
 import CreateProduct from "../features/product/pages/CreateProduct.jsx"
 import Dashboard from "../features/product/pages/Dashboard.jsx";
 import Protected from "../features/auth/components/Protected.jsx";
+import Home from "../features/product/pages/Home.jsx";
 
 export const routes = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Home />
+  },
+  {
+    path: "/register",
+    element: <Register />
+  },
+  {
+    path: "/login",
+    element: <Login />
+  },
+  {
+    path: "/auth/google/callback",
+    element: <GoogleCallback />
+  },
+  {
+    path: "/seller",
     children: [
       {
-        path: "/register",
-        element: <Register />
+        path: "create-product",
+        element:
+          <Protected>
+            <CreateProduct />
+          </Protected>
       },
       {
-        path: "/login",
-        element: <Login />
-      },
-      {
-        path: "/auth/google/callback",
-        element: <GoogleCallback />
-      },
-      {
-        path: "/seller",
-        children: [
-          {
-            path: "/seller/create-product",
-            element: 
-            <Protected>
-              <CreateProduct />
-            </Protected>
-          },
-          {
-            path: "/seller/dashboard",
-            element: <Dashboard />
-          }
-        ]
+        path: "dashboard",
+        element:
+          <Protected>
+            <Dashboard />
+          </Protected>
       }
     ]
   }
