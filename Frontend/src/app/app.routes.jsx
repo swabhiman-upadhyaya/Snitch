@@ -7,6 +7,7 @@ import CreateProduct from "../features/product/pages/CreateProduct.jsx"
 import Dashboard from "../features/product/pages/Dashboard.jsx";
 import Protected from "../features/auth/components/Protected.jsx";
 import Home from "../features/product/pages/Home.jsx";
+import ProductDetail from "../features/product/pages/ProductDetail.jsx";
 
 export const routes = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ export const routes = createBrowserRouter([
   {
     path: "/auth/google/callback",
     element: <GoogleCallback />
+  },
+  {
+    path: "/product/:productId",
+    element: <ProductDetail />
   },
   {
     path: "/seller",

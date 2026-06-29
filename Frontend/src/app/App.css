@@ -1,8 +1,29 @@
 @import "tailwindcss";
 
-:root {
+/* :root {
   --theme-1: #DBAFA0;
   --theme-2: #BB8493;
   --theme-3: #704264;
   --theme-4: #49243E;
+} */
+
+:root {
+  --theme-1: #F8F9D7;
+  --theme-2: #C4D7E0;
+  --theme-3: #B2C8DF;
+  --theme-4: #6E85B7;
 }
+
+/* :root {
+  --theme-1: #F4F4F2;
+  --theme-2: #E8E8E8;
+  --theme-3: #BBBFCA;
+  --theme-4: #495464;
+} */
+
+/* :root {
+  --theme-1: #F4F9F9;
+  --theme-2: #CCF2F4;
+  --theme-3: #A4EBF3;
+  --theme-4: #AAAAAA;
+} */
